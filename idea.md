@@ -56,7 +56,8 @@ Tech Stack
 Layer	Tools
 Frontend	React.js 
 Backend	Node.js with Express.js
-Database	SQL / MongoDB
+ORM Prisma
+Database	SQL / MongoDB 
 Authentication	JWT + bcrypt
 AI Integration	 OpenAI API
 File Storage	 Firebase
