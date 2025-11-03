@@ -7,7 +7,7 @@ import {
   leaveTrip,
 } from "../controllers/tripController.js"; 
 
-const router = express.router();
+const router = express.Router();
 
 router.post('/',createTrip);
 router.get("/", getAllTrips); 
