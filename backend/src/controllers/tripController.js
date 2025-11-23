@@ -1,14 +1,23 @@
 import Trip from '../models/Trip.js';
-import User from '../models/User.js';
 
 export const createTrip = async (req,res)=>{
     try{
-        const {destination, startDate, endDate, description, creator } = req.body;
-        const trip = new Trip({ destination, startDate, endDate, description, creator });
+        const {title, destination, startDate, endDate, description, budget, groupSize, creator } = req.body;
+        const trip = new Trip({
+            title: title || "Untitled Trip",
+            destination,
+            startDate,
+            endDate,
+            description,
+            budget,
+            maxMembers: groupSize,
+            createdBy: creator
+        });
         await trip.save();
 
         res.status(201).json({ message: "Trip created successfully", trip });
   } catch (error) {
+    console.error("Error creating trip:", error);
     res.status(500).json({ message: "Error creating trip", error: error.message });
   }
 };
