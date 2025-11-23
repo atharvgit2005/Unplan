@@ -42,7 +42,6 @@ export default function CreateTrip() {
 
   return (
     <div className="create-page">
-      {/* Top Navigation */}
       <header className="topbar">
         <div className="topbar-inner">
           <div className="logo">Unplan</div>
@@ -53,7 +52,6 @@ export default function CreateTrip() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="main">
         <div className="main-inner">
           <h1 className="headline">
@@ -61,9 +59,7 @@ export default function CreateTrip() {
           </h1>
 
           <div className="content-grid">
-            {/* LEFT SIDE FORM */}
             <div className="left-column">
-              {/* Destination & Dates */}
               <section className="card">
                 <h2 className="card-title card-title-blue">Destination & Dates</h2>
                 <p className="card-subtitle">Where are you heading?</p>
@@ -100,7 +96,6 @@ export default function CreateTrip() {
                 </div>
               </section>
 
-              {/* Trip Details */}
               <section className="card">
                 <h2 className="card-title card-title-orange">Trip Details</h2>
                 <p className="card-subtitle">Tell us about your adventure</p>
@@ -139,7 +134,6 @@ export default function CreateTrip() {
               </section>
             </div>
 
-            {/* RIGHT SIDE PREVIEW */}
             <aside className="card preview">
               <h2 className="card-title card-title-preview">Trip Preview</h2>
 
@@ -179,9 +173,7 @@ export default function CreateTrip() {
 
               <button className="button-draft">Save as Draft</button>
             </aside>
-          </div>
-
-          {/* Bottom Bar */}
+          </div> 
           <div className="bottom-bar">
             <button onClick={handleSubmit} className="button-publish">
               Publish Trip
