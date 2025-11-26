@@ -1,15 +1,18 @@
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "./create-trip.css";
 
 export default function CreateTrip() {
   const [trip, setTrip] = useState({
     title: "",
     destination: "",
-    startDate: "",
-    endDate: "",
+    startDate: null,
+    endDate: null,
     description: "",
     budget: "",
-    groupSize: "",
+    maxMembers: "",
+    category: "",
   });
 
   const handleChange = (e) => {
@@ -19,15 +22,9 @@ export default function CreateTrip() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-  const data = {
-      title: trip.title,
-      destination: trip.destination,
-      startDate: trip.startDate,
-      endDate: trip.endDate,
-      description: trip.description,
-      budget: trip.budget,
-      groupSize: trip.groupSize,
-      creator: "66343b56abc12345", // replace with logged in user ID
+    const data = {
+      ...trip,
+      createdBy: "66343b56abc12345", // replace with logged-in ID
     };
 
     try {
@@ -36,7 +33,8 @@ export default function CreateTrip() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      alert("Trip created!");
+
+      alert("Trip created successfully");
     } catch (err) {
       alert("Error creating trip");
     }
@@ -48,8 +46,8 @@ export default function CreateTrip() {
         <div className="topbar-inner">
           <div className="logo">Unplan</div>
           <nav>
-            <a className="link-primary">+ Create Trip</a>
-            <a className="link-danger">Logout</a>
+            <a className="nav-link primary">+ Create Trip</a>
+            <a className="nav-link danger">Logout</a>
           </nav>
         </div>
       </header>
@@ -60,10 +58,11 @@ export default function CreateTrip() {
             Fill in the details below to create your adventure
           </h1>
 
-          <div className="content-grid">
+          <div className="grid-layout">
+           
             <div className="left-column">
               <section className="card">
-                <h2 className="card-title card-title-blue">Destination & Dates</h2>
+                <h2 className="card-title blue"> Destination & Dates</h2>
                 <p className="card-subtitle">Where are you heading?</p>
 
                 <label className="label">Trip Title</label>
@@ -71,7 +70,7 @@ export default function CreateTrip() {
                   type="text"
                   name="title"
                   onChange={handleChange}
-                  placeholder="e.g., Summer Adventure in Goa"
+                  placeholder="e.g., Summer Escape to Goa"
                   className="input"
                 />
 
@@ -87,37 +86,55 @@ export default function CreateTrip() {
                 <div className="row">
                   <div>
                     <label className="label">Start Date</label>
-                    <input
-                      type="date"
-                      name="startDate"
-                      onChange={handleChange}
+                    <DatePicker
+                      selected={trip.startDate}
+                      onChange={(date) => setTrip({ ...trip, startDate: date })}
+                      dateFormat="yyyy-MM-dd"
                       className="input"
+                      placeholderText="Select start date"
                     />
                   </div>
 
                   <div>
                     <label className="label">End Date</label>
-                    <input
-                      type="date"
-                      name="endDate"
-                      onChange={handleChange}
+                    <DatePicker
+                      selected={trip.endDate}
+                      onChange={(date) => setTrip({ ...trip, endDate: date })}
+                      dateFormat="yyyy-MM-dd"
                       className="input"
+                      placeholderText="Select end date"
                     />
                   </div>
                 </div>
               </section>
 
               <section className="card">
-                <h2 className="card-title card-title-orange">Trip Details</h2>
-                <p className="card-subtitle">Tell us about your adventure</p>
+                <h2 className="card-title orange">Trip Details</h2>
+                <p className="card-subtitle">Tell us more about it</p>
 
                 <label className="label">Description</label>
                 <textarea
                   name="description"
-                  className="textarea"
                   onChange={handleChange}
-                  placeholder="Tell us about your adventure…"
+                  placeholder="Describe your adventure…"
+                  className="textarea"
                 />
+
+                <label className="label">Category</label>
+                <select
+                  name="category"
+                  className="input"
+                  value={trip.category}
+                  onChange={handleChange}
+                >
+                  <option value="">Select category</option>
+                  <option value="adventure">Adventure</option>
+                  <option value="trekking">Trekking</option>
+                  <option value="beach">Beach</option>
+                  <option value="cultural">Cultural</option>
+                  <option value="spiritual">Spiritual</option>
+                  <option value="family">Family</option>
+                </select>
 
                 <div className="row">
                   <div>
@@ -125,20 +142,20 @@ export default function CreateTrip() {
                     <input
                       type="number"
                       name="budget"
-                      placeholder="e.g., 1000"
-                      className="input"
+                      placeholder="e.g., 50000"
                       onChange={handleChange}
+                      className="input"
                     />
                   </div>
 
                   <div>
-                    <label className="label">Group Size</label>
+                    <label className="label">Max Members</label>
                     <input
                       type="number"
-                      name="groupSize"
-                      placeholder="e.g., 4-6"
-                      className="input"
+                      name="maxMembers"
+                      placeholder="e.g., 5"
                       onChange={handleChange}
+                      className="input"
                     />
                   </div>
                 </div>
@@ -146,53 +163,35 @@ export default function CreateTrip() {
             </div>
 
             <aside className="card preview">
-              <h2 className="card-title card-title-preview">Trip Preview</h2>
+              <h2 className="card-title preview-title"> Trip Preview</h2>
 
-              <div className="preview-box">
-                <span className="preview-box-text">Destination preview</span>
-              </div>
+              <div className="preview-banner">Destination Preview</div>
 
               <div className="preview-info">
-                <div className="preview-row">
-                  <span>Title:</span>
-                  <strong>{trip.title || "Not set"}</strong>
-                </div>
-
-                <div className="preview-row">
-                  <span>Destination:</span>
-                  <strong>{trip.destination || "Not set"}</strong>
-                </div>
-
-                <div className="preview-row">
-                  <span>Duration:</span>
-                  <strong>
-                    {trip.startDate && trip.endDate
-                      ? `${trip.startDate} → ${trip.endDate}`
-                      : "Select dates"}
-                  </strong>
-                </div>
-
-                <div className="preview-row">
-                  <span>Budget:</span>
-                  <strong>{trip.budget || "Not set"}</strong>
-                </div>
-
-                <div className="preview-row">
-                  <span>Group Size:</span>
-                  <strong>{trip.groupSize || "Not set"}</strong>
-                </div>
+                <p><span>Title:</span> {trip.title || "Not set"}</p>
+                <p><span>Destination:</span> {trip.destination || "Not set"}</p>
+                <p>
+                  <span>Duration:</span> 
+                  {trip.startDate && trip.endDate
+                    ? `${trip.startDate.toDateString()} → ${trip.endDate.toDateString()}`
+                    : "Select dates"}
+                </p>
+                <p><span>Budget:</span> {trip.budget || "Not set"}</p>
+                <p><span>Category:</span> {trip.category || "Not set"}</p>
+                <p><span>Max Members:</span> {trip.maxMembers || "Not set"}</p>
               </div>
 
-              <div className="info-box">
-                Publishing soon! Fill all details to publish your trip.
+              <div className="info-note">
+                 Publishing soon! Fill all details to publish your trip.
               </div>
 
-              <button className="button-draft">Save as Draft</button>
+              <button className="btn-draft">Save as Draft</button>
             </aside>
-          </div> 
+          </div>
+
           <div className="bottom-bar">
-            <button onClick={handleSubmit} className="button-publish">
-              Publish Trip
+            <button onClick={handleSubmit} className="btn-primary">
+              Publish Trip 
             </button>
           </div>
         </div>
