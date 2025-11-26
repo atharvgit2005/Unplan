@@ -3,6 +3,7 @@ import "./create-trip.css";
 
 export default function CreateTrip() {
   const [trip, setTrip] = useState({
+    title: "",
     destination: "",
     startDate: "",
     endDate: "",
@@ -18,7 +19,8 @@ export default function CreateTrip() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = {
+  const data = {
+      title: trip.title,
       destination: trip.destination,
       startDate: trip.startDate,
       endDate: trip.endDate,
@@ -63,6 +65,15 @@ export default function CreateTrip() {
               <section className="card">
                 <h2 className="card-title card-title-blue">Destination & Dates</h2>
                 <p className="card-subtitle">Where are you heading?</p>
+
+                <label className="label">Trip Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  onChange={handleChange}
+                  placeholder="e.g., Summer Adventure in Goa"
+                  className="input"
+                />
 
                 <label className="label">Destination</label>
                 <input
@@ -142,6 +153,11 @@ export default function CreateTrip() {
               </div>
 
               <div className="preview-info">
+                <div className="preview-row">
+                  <span>Title:</span>
+                  <strong>{trip.title || "Not set"}</strong>
+                </div>
+
                 <div className="preview-row">
                   <span>Destination:</span>
                   <strong>{trip.destination || "Not set"}</strong>
