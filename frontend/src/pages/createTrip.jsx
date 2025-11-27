@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getUserFromToken, removeToken } from "../utils/auth";
 import "./create-trip.css";
 
 export default function CreateTrip() {
+  const [currentUser, setCurrentUser] = useState(null);
+
   const [trip, setTrip] = useState({
     title: "",
     destination: "",
@@ -12,6 +15,22 @@ export default function CreateTrip() {
     groupSize: "",
   });
 
+  
+  useEffect(() => {
+    const user = getUserFromToken();
+    if (user) {
+      setCurrentUser(user);
+    }
+  }, []);
+
+  
+  const handleLogout = () => {
+    if (window.confirm("Are you sure you want to logout?")) {
+      removeToken();
+      window.location.href = "/login";
+    }
+  };
+
   const handleChange = (e) => {
     setTrip({ ...trip, [e.target.name]: e.target.value });
   };
@@ -19,7 +38,14 @@ export default function CreateTrip() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-  const data = {
+    const user = getUserFromToken();
+    if (!user) {
+      alert("Session expired. Please login again.");
+      window.location.href = "/login";
+      return;
+    }
+
+    const data = {
       title: trip.title,
       destination: trip.destination,
       startDate: trip.startDate,
@@ -27,11 +53,11 @@ export default function CreateTrip() {
       description: trip.description,
       budget: trip.budget,
       groupSize: trip.groupSize,
-      creator: "66343b56abc12345", // replace with logged in user ID
+      creator: user.userId, 
     };
 
     try {
-      await fetch("http://localhost:5000/api/trips", {
+      await fetch("http://localhost:8000/api/trips", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -49,7 +75,9 @@ export default function CreateTrip() {
           <div className="logo">Unplan</div>
           <nav>
             <a className="link-primary">+ Create Trip</a>
-            <a className="link-danger">Logout</a>
+            <a className="link-danger" onClick={handleLogout} style={{ cursor: "pointer" }}>
+              Logout
+            </a>
           </nav>
         </div>
       </header>
