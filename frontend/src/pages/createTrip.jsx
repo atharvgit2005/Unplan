@@ -4,6 +4,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./create-trip.css";
 
 export default function CreateTrip() {
+  const [currentUser, setCurrentUser] = useState(null);
+
   const [trip, setTrip] = useState({
     title: "",
     destination: "",
@@ -14,6 +16,22 @@ export default function CreateTrip() {
     maxMembers: "",
     category: "",
   });
+
+  
+  useEffect(() => {
+    const user = getUserFromToken();
+    if (user) {
+      setCurrentUser(user);
+    }
+  }, []);
+
+  
+  const handleLogout = () => {
+    if (window.confirm("Are you sure you want to logout?")) {
+      removeToken();
+      window.location.href = "/login";
+    }
+  };
 
   const handleChange = (e) => {
     setTrip({ ...trip, [e.target.name]: e.target.value });
@@ -28,7 +46,7 @@ export default function CreateTrip() {
     };
 
     try {
-      await fetch("http://localhost:5000/api/trips", {
+      await fetch("http://localhost:8000/api/trips", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
