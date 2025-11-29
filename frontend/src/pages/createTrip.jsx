@@ -59,7 +59,6 @@ export default function CreateTrip() {
           </h1>
 
           <div className="grid-layout">
-           
             <div className="left-column">
               <section className="card">
                 <h2 className="card-title blue"> Destination & Dates</h2>

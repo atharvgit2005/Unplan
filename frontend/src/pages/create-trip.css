@@ -3,15 +3,15 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
+
 }
 
 body {
   background: #f7faff;
 }
 
-
 .topbar {
-  background: white;
+  background: rgb(204, 236, 255);
   padding: 16px 0;
   border-bottom: 1px solid #e8e8e8;
   position: sticky;
@@ -41,7 +41,7 @@ nav .nav-link {
 }
 
 nav .primary {
-  color: #4dabf7;
+  color: #4c6ef5;
   font-weight: 600;
 }
 
@@ -59,19 +59,31 @@ nav .danger:hover {
 }
 
 .main {
-  padding: 30px 0 60px;
+  padding: 30px 20px 60px;
+  background-image: url('../photos/Createtrip.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 64, 77, 0.459);             
+  z-index: 0;
 }
 
 .main-inner {
-  width: 92%;
-  margin: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .headline {
   text-align: center;
   font-size: 26px;
   font-weight: 600;
-  color: #364fc7;
+  color: #ffffff;
   margin-bottom: 35px;
 }
 
@@ -81,12 +93,11 @@ nav .danger:hover {
   gap: 25px;
 }
 
-
 .card {
-  background: white;
+  background:rgba(220, 247, 255, 0.9);
   padding: 24px;
   border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(80, 120, 250, 0.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
   margin-bottom: 25px;
 }
 
@@ -96,17 +107,10 @@ nav .danger:hover {
   margin-bottom: 6px;
 }
 
-.card-title.blue {
-  color: #5c7cfa;
+.card-title {
+  color: #4c6ef5;
 }
 
-.card-title.orange {
-  color: #ffa94d;
-}
-
-.card-title.preview-title {
-  color: #845ef7;
-}
 
 .card-subtitle {
   font-size: 14px;
@@ -148,13 +152,11 @@ select:focus {
   resize: none;
 }
 
-
 .row {
   display: flex;
   justify-content: space-between;
   gap: 15px;
 }
-
 
 .preview {
   text-align: left;
@@ -225,7 +227,6 @@ select:focus {
 .btn-draft:hover {
   background: #d0ebff;
 }
-
 
 .bottom-bar {
   margin-top: 25px;
