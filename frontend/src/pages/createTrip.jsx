@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./create-trip.css";
+import {getUserFromToken , removeToken } from "../utils/auth"
 
 export default function CreateTrip() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -46,7 +47,7 @@ export default function CreateTrip() {
     };
 
     try {
-      await fetch("http://localhost:8000/api/trips", {
+      await fetch("http://localhost:5000/api/trips", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
