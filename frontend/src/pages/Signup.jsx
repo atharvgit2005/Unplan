@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { setToken } from "../utils/auth";
 import "./Login.css";
+import { API_BASE_URL } from "../config";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ export default function Signup() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     setError("");
 
     if (!formData.name || !formData.email || !formData.password) {
@@ -60,7 +61,8 @@ export default function Signup() {
           : [],
       };
 
-      const response = await fetch("/api/auth/signup", {
+      // ... inside component ...
+      const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

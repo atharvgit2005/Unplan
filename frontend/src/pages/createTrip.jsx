@@ -1,8 +1,9 @@
-import React, { useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./create-trip.css";
-import {getUserFromToken , removeToken } from "../utils/auth"
+import { getUserFromToken, removeToken } from "../utils/auth"
+import { API_BASE_URL } from "../config";
 
 export default function CreateTrip() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -18,7 +19,7 @@ export default function CreateTrip() {
     category: "",
   });
 
-  
+
   useEffect(() => {
     const user = getUserFromToken();
     if (user) {
@@ -26,7 +27,7 @@ export default function CreateTrip() {
     }
   }, []);
 
-  
+
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       removeToken();
@@ -47,7 +48,8 @@ export default function CreateTrip() {
     };
 
     try {
-      await fetch("http://localhost:5000/api/trips", {
+      // ... inside component ...
+      await fetch(`${API_BASE_URL}/api/trips`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -66,7 +68,7 @@ export default function CreateTrip() {
           <div className="logo">Unplan</div>
           <nav>
             <a className="nav-link primary">+ Create Trip</a>
-            <a className="nav-link danger">Logout</a>
+            <a className="nav-link danger" onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</a>
           </nav>
         </div>
       </header>
@@ -189,7 +191,7 @@ export default function CreateTrip() {
                 <p><span>Title:</span> {trip.title || "Not set"}</p>
                 <p><span>Destination:</span> {trip.destination || "Not set"}</p>
                 <p>
-                  <span>Duration:</span> 
+                  <span>Duration:</span>
                   {trip.startDate && trip.endDate
                     ? `${trip.startDate.toDateString()} → ${trip.endDate.toDateString()}`
                     : "Select dates"}
@@ -200,7 +202,7 @@ export default function CreateTrip() {
               </div>
 
               <div className="info-note">
-                 Publishing soon! Fill all details to publish your trip.
+                Publishing soon! Fill all details to publish your trip.
               </div>
 
               <button className="btn-draft">Save as Draft</button>
@@ -209,7 +211,7 @@ export default function CreateTrip() {
 
           <div className="bottom-bar">
             <button onClick={handleSubmit} className="btn-primary">
-              Publish Trip 
+              Publish Trip
             </button>
           </div>
         </div>
