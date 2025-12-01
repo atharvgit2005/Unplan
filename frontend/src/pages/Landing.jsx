@@ -110,15 +110,12 @@ export default function Landing() {
           <div className="footer-section">
             <h3>Support</h3>
             <div className="footer-links">
-              <a href="#help">Help Center</a>
-              <a href="#privacy">Privacy Policy</a>
-              <a href="#terms">Terms of Service</a>
-              <a href="#cookies">Cookie Policy</a>
+              
             </div>
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; 2024 Unplan. All rights reserved.</p>
+          <p>&copy; Unplan. All rights reserved.</p>
         </div>
       </footer>
     </div>
