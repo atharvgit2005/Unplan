@@ -11,7 +11,7 @@ body {
 }
 
 .topbar {
-  background: rgb(204, 236, 255);
+  background: rgb(255, 255, 255);
   padding: 16px 0;
   border-bottom: 1px solid #e8e8e8;
   position: sticky;
@@ -70,7 +70,7 @@ nav .danger:hover {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(30, 64, 77, 0.459);             
+  background: rgba(98, 108, 135, 0.683);             
   z-index: 0;
 }
 
@@ -94,7 +94,7 @@ nav .danger:hover {
 }
 
 .card {
-  background:rgba(220, 247, 255, 0.9);
+  background:rgba(206, 221, 255, 0.963);
   padding: 24px;
   border-radius: 14px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
