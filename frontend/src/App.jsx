@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Landing from "./pages/Landing";
 import CreateTrip from "./pages/createTrip";
+import ExploreTrips from "./pages/exploreTrip";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { isAuthenticated } from "./utils/auth";
@@ -25,6 +26,14 @@ function App() {
           element={
             <ProtectedRoute>
               <CreateTrip />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/explore-trips"
+          element={
+            <ProtectedRoute>
+              <ExploreTrips />
             </ProtectedRoute>
           }
         />

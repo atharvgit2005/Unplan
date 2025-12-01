@@ -42,13 +42,17 @@ export default function CreateTrip() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!currentUser) {
+      alert("You must be logged in to create a trip.");
+      return;
+    }
+
     const data = {
       ...trip,
-      createdBy: "66343b56abc12345", // replace with logged-in ID
+      createdBy: currentUser.userId,
     };
 
     try {
-      // ... inside component ...
       await fetch(`${API_BASE_URL}/api/trips`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -65,9 +69,10 @@ export default function CreateTrip() {
     <div className="create-page">
       <header className="topbar">
         <div className="topbar-inner">
-          <div className="logo">Unplan</div>
+          <div className="logo">UnPlan</div>
           <nav>
-            <a className="nav-link primary">+ Create Trip</a>
+            <a className="nav-link primary" href="/create-trip">+ Create Trip</a>
+            <a className="nav-link" href="/explore-trips">Explore Trips</a>
             <a className="nav-link danger" onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</a>
           </nav>
         </div>
