@@ -9,7 +9,8 @@ const tripSchema = new mongoose.Schema({
   budget: { type: Number, required: true },
   maxMembers: { type: Number, required: true },
   category: { type: String, enum: ['adventure', 'trekking', 'beach', 'cultural', 'spiritual', 'family', 'others'], required: true },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  image: { type: String },
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }

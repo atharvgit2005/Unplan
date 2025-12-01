@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./create-trip.css";
 import { getUserFromToken, removeToken } from "../utils/auth"
 import { API_BASE_URL } from "../config";
+import defaultPreview from "./Add destination preview.png";
 
 export default function CreateTrip() {
   const [currentUser, setCurrentUser] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+  const fileInputRef = useRef(null);
 
   const [trip, setTrip] = useState({
     title: "",
@@ -39,6 +42,14 @@ export default function CreateTrip() {
     setTrip({ ...trip, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -47,16 +58,26 @@ export default function CreateTrip() {
       return;
     }
 
-    const data = {
-      ...trip,
-      createdBy: currentUser.userId,
-    };
+    const formData = new FormData();
+    formData.append("title", trip.title);
+    formData.append("destination", trip.destination);
+    formData.append("startDate", trip.startDate);
+    formData.append("endDate", trip.endDate);
+    formData.append("description", trip.description);
+    formData.append("budget", trip.budget);
+    formData.append("maxMembers", trip.maxMembers);
+    formData.append("category", trip.category);
+    formData.append("createdBy", currentUser.userId);
+
+    // Get the file from the input ref
+    if (fileInputRef.current && fileInputRef.current.files[0]) {
+      formData.append("image", fileInputRef.current.files[0]);
+    }
 
     try {
       await fetch(`${API_BASE_URL}/api/trips`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: formData,
       });
 
       alert("Trip created successfully");
@@ -190,8 +211,36 @@ export default function CreateTrip() {
             <aside className="card preview">
               <h2 className="card-title preview-title"> Trip Preview</h2>
 
-              <div className="preview-banner">Destination Preview</div>
-
+              <div
+                className="preview-banner"
+                style={{
+                  backgroundColor: "white",
+                  cursor: "pointer",
+                  overflow: "hidden",
+                  position: "relative"
+                }}
+                onClick={() => fileInputRef.current.click()}
+              >
+                <img
+                  src={previewImage || defaultPreview}
+                  alt="Destination Preview"
+                  style={{
+                    width: previewImage ? "100%" : "60%",
+                    height: previewImage ? "100%" : "auto",
+                    objectFit: previewImage ? "cover" : "contain",
+                    transform: previewImage ? "none" : "scale(1.2)",
+                    transition: "transform 0.3s ease"
+                  }}
+                />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  ref={fileInputRef}
+                  style={{ display: "none" }}
+                />
+              </div>
+              ₹
               <div className="preview-info">
                 <p><span>Title:</span> {trip.title || "Not set"}</p>
                 <p><span>Destination:</span> {trip.destination || "Not set"}</p>

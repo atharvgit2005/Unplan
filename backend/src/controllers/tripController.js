@@ -3,6 +3,12 @@ import Trip from '../models/Trip.js';
 export const createTrip = async (req, res) => {
   try {
     const { title, destination, startDate, endDate, description, budget, maxMembers, category, createdBy } = req.body;
+
+    let imagePath = "";
+    if (req.file) {
+      imagePath = req.file.path;
+    }
+
     const trip = new Trip({
       title: title || "Untitled Trip",
       destination,
@@ -12,6 +18,7 @@ export const createTrip = async (req, res) => {
       budget,
       maxMembers,
       category,
+      image: imagePath,
       createdBy
     });
 
