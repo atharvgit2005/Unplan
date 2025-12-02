@@ -47,7 +47,7 @@ function ExploreTrips() {
 
           {trips.length === 0 && <p>No trips available yet.</p>}
 
-          <div className="grid-layout" style={{ display: 'block' }}>
+          <div className="grid-layout" >
             {trips.map((trip) => (
               <div
                 key={trip._id}

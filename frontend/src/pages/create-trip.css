@@ -60,7 +60,7 @@ nav .danger:hover {
 
 .main {
   padding: 30px 20px 60px;
-  background-image: url('../photos/Createtrip.jpg');
+  background-image: url('./CreateTrip.jpeg');
   background-size: cover;
   background-position: center;
   position: relative;
