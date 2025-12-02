@@ -69,7 +69,7 @@ export default function Home() {
     useGSAP(() => {
         // Global Video Parallax - Subtle movement and scale
         gsap.fromTo('.hero-video',
-            { scale: 1.2, y: 0 },
+            { scale: 1.2, y: 0, xPercent: -50, yPercent: -50 },
             {
                 scrollTrigger: {
                     trigger: document.documentElement, // Use documentElement to track full page scroll
@@ -79,6 +79,8 @@ export default function Home() {
                 },
                 scale: 1.0, // Scale down slightly to create depth/distance effect
                 y: 100, // Move down slightly to create parallax against upward scrolling content
+                xPercent: -50,
+                yPercent: -50,
                 ease: 'none'
             }
         )
@@ -324,23 +326,15 @@ export default function Home() {
                 zIndex: -1,
                 overflow: 'hidden'
             }}>
-                <video
-                    className="hero-video" // Added class for GSAP target
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
+                <iframe
+                    className="hero-video video-background-iframe"
+                    src="https://www.youtube.com/embed/Fyb6Zhm3g_Q?autoplay=1&mute=1&controls=0&loop=1&playlist=Fyb6Zhm3g_Q&showinfo=0&rel=0&iv_load_policy=3&disablekb=1"
+                    allow="autoplay; encrypted-media"
+                    title="Background Video"
                     style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        transform: 'scale(1.2)', // Initial scale matched to GSAP fromTo
                         filter: 'brightness(1.3) contrast(1.1) saturate(1.2)' // Enhanced brightness and vibrancy
                     }}
-                >
-                    <source src="/1119.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
+                />
                 {/* Global Dark Gradient Overlay - More transparent for brighter video */}
                 <div style={{
                     position: 'absolute',
