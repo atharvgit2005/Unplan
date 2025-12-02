@@ -109,11 +109,12 @@ nav .danger:hover {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
 }
+
 .card:hover {
     transform: translateY(-6px) scale(1.02);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.9);
-    
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.9);
+
 
 }
 

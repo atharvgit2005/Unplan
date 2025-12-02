@@ -69,7 +69,6 @@ export default function CreateTrip() {
     formData.append("category", trip.category);
     formData.append("createdBy", currentUser.userId);
 
-    // Get the file from the input ref
     if (fileInputRef.current && fileInputRef.current.files[0]) {
       formData.append("image", fileInputRef.current.files[0]);
     }
