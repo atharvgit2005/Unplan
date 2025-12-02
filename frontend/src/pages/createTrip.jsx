@@ -1,275 +1,78 @@
-import React, { useState, useEffect, useRef } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "./create-trip.css";
-import { getUserFromToken, removeToken } from "../utils/auth"
-import { API_BASE_URL } from "../config";
-import defaultPreview from "./Add destination preview.png";
+import { useState } from 'react'
 
 export default function CreateTrip() {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
-  const fileInputRef = useRef(null);
+    const [loading, setLoading] = useState(false)
+    const [suggestions, setSuggestions] = useState(null)
 
-  const [trip, setTrip] = useState({
-    title: "",
-    destination: "",
-    startDate: null,
-    endDate: null,
-    description: "",
-    budget: "",
-    maxMembers: "",
-    category: "",
-  });
-
-
-  useEffect(() => {
-    const user = getUserFromToken();
-    if (user) {
-      setCurrentUser(user);
-    }
-  }, []);
-
-
-  const handleLogout = () => {
-    if (window.confirm("Are you sure you want to logout?")) {
-      removeToken();
-      window.location.href = "/login";
-    }
-  };
-
-  const handleChange = (e) => {
-    setTrip({ ...trip, [e.target.name]: e.target.value });
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setPreviewImage(URL.createObjectURL(file));
-
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!currentUser) {
-      alert("You must be logged in to create a trip.");
-      return;
+    const handleAISuggest = () => {
+        setLoading(true)
+        // Mock AI delay
+        setTimeout(() => {
+            setSuggestions([
+                { season: 'Spring', destination: 'Kyoto, Japan', reason: 'Cherry blossoms are in full bloom.' },
+                { season: 'Summer', destination: 'Amalfi Coast, Italy', reason: 'Perfect beach weather and vibrant nightlife.' },
+                { season: 'Autumn', destination: 'Vermont, USA', reason: 'Stunning fall foliage and cozy cabins.' },
+                { season: 'Winter', destination: 'Zermatt, Switzerland', reason: 'World-class skiing and snowy landscapes.' },
+            ])
+            setLoading(false)
+        }, 1500)
     }
 
-    const formData = new FormData();
-    formData.append("title", trip.title);
-    formData.append("destination", trip.destination);
-    formData.append("startDate", trip.startDate);
-    formData.append("endDate", trip.endDate);
-    formData.append("description", trip.description);
-    formData.append("budget", trip.budget);
-    formData.append("maxMembers", trip.maxMembers);
-    formData.append("category", trip.category);
-    formData.append("createdBy", currentUser.userId);
+    return (
+        <div className="container" style={{ padding: '120px 20px', maxWidth: '800px' }}>
+            <h1 style={{ fontSize: '32px', marginBottom: '40px' }}>Create Your Dream Trip</h1>
 
-    // Get the file from the input ref
-    if (fileInputRef.current && fileInputRef.current.files[0]) {
-      formData.append("image", fileInputRef.current.files[0]);
-    }
-
-    try {
-      await fetch(`${API_BASE_URL}/api/trips`, {
-        method: "POST",
-        body: formData,
-      });
-
-      alert("Trip created successfully");
-    } catch (err) {
-      alert("Error creating trip");
-    }
-  };
-
-  return (
-    <div className="create-page">
-      <header className="topbar">
-        <div className="topbar-inner">
-          <div className="logo">UnPlan</div>
-          <nav>
-            <a className="nav-link primary" href="/create-trip">+ Create Trip</a>
-            <a className="nav-link" href="/explore-trips">Explore Trips</a>
-            <a className="nav-link danger" onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</a>
-          </nav>
-        </div>
-      </header>
-
-      <main className="main">
-        <div className="main-inner">
-          <h1 className="headline">
-            Fill in the details below to create your adventure
-          </h1>
-
-          <div className="grid-layout">
-            <div className="left-column">
-              <section className="card">
-                <h2 className="card-title blue"> Destination & Dates</h2>
-                <p className="card-subtitle">Where are you heading?</p>
-
-                <label className="label">Trip Title</label>
-                <input
-                  type="text"
-                  name="title"
-                  onChange={handleChange}
-                  placeholder="e.g., Summer Escape to Goa"
-                  className="input"
-                />
-
-                <label className="label">Destination</label>
-                <input
-                  type="text"
-                  name="destination"
-                  onChange={handleChange}
-                  placeholder="e.g., Goa, Bali, Indonesia"
-                  className="input"
-                />
-
-                <div className="row">
-                  <div>
-                    <label className="label">Start Date</label>
-                    <DatePicker
-                      selected={trip.startDate}
-                      onChange={(date) => setTrip({ ...trip, startDate: date })}
-                      dateFormat="yyyy-MM-dd"
-                      className="input"
-                      placeholderText="Select start date"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="label">End Date</label>
-                    <DatePicker
-                      selected={trip.endDate}
-                      onChange={(date) => setTrip({ ...trip, endDate: date })}
-                      dateFormat="yyyy-MM-dd"
-                      className="input"
-                      placeholderText="Select end date"
-                    />
-                  </div>
+            <div className="glass-panel" style={{ padding: '40px' }}>
+                <div style={{ marginBottom: '20px' }}>
+                    <label style={{ display: 'block', marginBottom: '10px', color: '#ccc' }}>Where do you want to go?</label>
+                    <input type="text" placeholder="e.g. Europe, Beach, Mountains" style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'rgba(0,0,0,0.2)', color: 'white' }} />
                 </div>
-              </section>
 
-              <section className="card">
-                <h2 className="card-title orange">Trip Details</h2>
-                <p className="card-subtitle">Tell us more about it</p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '20px' }}>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '10px', color: '#ccc' }}>Budget</label>
+                        <select style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'rgba(0,0,0,0.2)', color: 'white' }}>
+                            <option>$1000 - $2000</option>
+                            <option>$2000 - $5000</option>
+                            <option>$5000+</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '10px', color: '#ccc' }}>Duration</label>
+                        <select style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'rgba(0,0,0,0.2)', color: 'white' }}>
+                            <option>3-5 Days</option>
+                            <option>1 Week</option>
+                            <option>2 Weeks</option>
+                        </select>
+                    </div>
+                </div>
 
-                <label className="label">Description</label>
-                <textarea
-                  name="description"
-                  onChange={handleChange}
-                  placeholder="Describe your adventure…"
-                  className="textarea"
-                />
-
-                <label className="label">Category</label>
-                <select
-                  name="category"
-                  className="input"
-                  value={trip.category}
-                  onChange={handleChange}
+                <button
+                    onClick={handleAISuggest}
+                    className="btn btn-primary"
+                    style={{ width: '100%', marginBottom: '30px' }}
+                    disabled={loading}
                 >
-                  <option value="">Select category</option>
-                  <option value="adventure">Adventure</option>
-                  <option value="trekking">Trekking</option>
-                  <option value="beach">Beach</option>
-                  <option value="cultural">Cultural</option>
-                  <option value="spiritual">Spiritual</option>
-                  <option value="family">Family</option>
-                </select>
+                    {loading ? 'Generating Suggestions...' : 'Get AI Suggestions'}
+                </button>
 
-                <div className="row">
-                  <div>
-                    <label className="label">Budget</label>
-                    <input
-                      type="number"
-                      name="budget"
-                      placeholder="e.g., 50000"
-                      onChange={handleChange}
-                      className="input"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="label">Max Members</label>
-                    <input
-                      type="number"
-                      name="maxMembers"
-                      placeholder="e.g., 5"
-                      onChange={handleChange}
-                      className="input"
-                    />
-                  </div>
-                </div>
-              </section>
+                {suggestions && (
+                    <div style={{ marginTop: '30px', borderTop: '1px solid var(--border)', paddingTop: '30px' }}>
+                        <h3 style={{ marginBottom: '20px' }}>AI Season-wise Suggestions</h3>
+                        <div style={{ display: 'grid', gap: '20px' }}>
+                            {suggestions.map((s, i) => (
+                                <div key={i} style={{ background: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                                        <strong style={{ color: 'var(--primary)' }}>{s.season}</strong>
+                                        <span>{s.destination}</span>
+                                    </div>
+                                    <p style={{ margin: 0, color: '#888', fontSize: '14px' }}>{s.reason}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
-
-            <aside className="card preview">
-              <h2 className="card-title preview-title"> Trip Preview</h2>
-
-              <div
-                className="preview-banner"
-                style={{
-                  backgroundColor: "white",
-                  cursor: "pointer",
-                  overflow: "hidden",
-                  position: "relative"
-                }}
-                onClick={() => fileInputRef.current.click()}
-              >
-                <img
-                  src={previewImage || defaultPreview}
-                  alt="Destination Preview"
-                  style={{
-                    width: previewImage ? "100%" : "60%",
-                    height: previewImage ? "100%" : "auto",
-                    objectFit: previewImage ? "cover" : "contain",
-                    transform: previewImage ? "none" : "scale(1.2)",
-                    transition: "transform 0.3s ease"
-                  }}
-                />
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                />
-              </div>
-              ₹
-              <div className="preview-info">
-                <p><span>Title:</span> {trip.title || "Not set"}</p>
-                <p><span>Destination:</span> {trip.destination || "Not set"}</p>
-                <p>
-                  <span>Duration:</span>
-                  {trip.startDate && trip.endDate
-                    ? `${trip.startDate.toDateString()} → ${trip.endDate.toDateString()}`
-                    : "Select dates"}
-                </p>
-                <p><span>Budget:</span> {trip.budget || "Not set"}</p>
-                <p><span>Category:</span> {trip.category || "Not set"}</p>
-                <p><span>Max Members:</span> {trip.maxMembers || "Not set"}</p>
-              </div>
-
-              <div className="info-note">
-                Publishing soon! Fill all details to publish your trip.
-              </div>
-
-              <button className="btn-draft">Save as Draft</button>
-            </aside>
-          </div>
-
-          <div className="bottom-bar">
-            <button onClick={handleSubmit} className="btn-primary">
-              Publish Trip
-            </button>
-          </div>
         </div>
-      </main>
-    </div>
-  );
+    )
 }
