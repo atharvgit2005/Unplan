@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 import { removeToken } from "../utils/auth";
-import "./create-trip.css";
+import "./exploreTrip.css";
 
 function ExploreTrips() {
   const [trips, setTrips] = useState([]);
@@ -52,17 +52,26 @@ function ExploreTrips() {
               <div
                 key={trip._id}
                 className="card"
-                style={{ marginBottom: "20px" }}
+                style={{ marginBottom: "20px", overflow: "hidden" }}
               >
-                <h2 className="card-title blue">{trip.title}</h2>
-                <p><strong>Destination:</strong> {trip.destination}</p>
-                <p><strong>Budget:</strong> ₹{trip.budget}</p>
-
-                {trip.createdBy && (
-                  <p>
-                    <strong>Created by:</strong> {trip.createdBy.name} ({trip.createdBy.email})
-                  </p>
+                {trip.image && (
+                  <img
+                    src={`${API_BASE_URL}/${trip.image}`}
+                    alt={trip.title}
+                    style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "12px 12px 0 0" }}
+                  />
                 )}
+                <div style={{ padding: "15px" }}>
+                  <h2 className="card-title blue">{trip.title}</h2>
+                  <p><strong>Destination:</strong> {trip.destination}</p>
+                  <p><strong>Budget:</strong> ₹{trip.budget}</p>
+
+                  {trip.createdBy && (
+                    <p>
+                      <strong>Created by:</strong> {trip.createdBy.name} ({trip.createdBy.email})
+                    </p>
+                  )}
+                </div>
               </div>
             ))}
           </div>
