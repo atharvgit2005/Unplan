@@ -10,52 +10,90 @@ body {
   background: #f7faff;
 }
 
-.topbar {
-  background: rgb(255, 255, 255);
-  padding: 16px 0;
-  border-bottom: 1px solid #e8e8e8;
+.navbar {
   position: sticky;
   top: 0;
-  z-index: 10;
+  left: 0;
+  right: 0;
+  padding: 0.9rem 0;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  z-index: 1000;
 }
 
-.topbar-inner {
-  width: 92%;
+.nav-container {
+  max-width: 1250px;
   margin: auto;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.logo {
-  font-weight: 700;
-  font-size: 22px;
-  color: #4c6ef5;
+.nav-logo .logo-text {
+  font-size: 1.9rem;
+  font-weight: 800;
+ 
+
 }
 
-nav .nav-link {
-  margin-left: 18px;
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.nav-link {
+  padding: 0.6rem 1.3rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #374151;
   cursor: pointer;
-  font-size: 15px;
+  border-radius: 40px;
+  position: relative;
   transition: 0.3s ease;
 }
 
-nav .primary {
-  color: #4c6ef5;
-  font-weight: 600;
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 0%;
+  height: 2px;
+  background: #667eea;
+  transition: 0.3s ease;
+  transform: translateX(-50%);
 }
 
-nav .primary:hover {
-  color: #1c7ed6;
+.nav-link:hover::after {
+  width: 50%;
 }
 
-nav .danger {
-  color: #fa5252;
-  font-weight: 600;
+
+.nav-link:hover {
+  background: rgba(102, 126, 234, 0.12);
+  box-shadow: 0 5px 14px rgba(102,126,234,0.18);
+  color: #000;
 }
 
-nav .danger:hover {
-  color: #e03131;
+
+.signup-btn {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #1f2937 !important;
+  font-weight: 700;
+  padding: 0.6rem 1.6rem;
+  border-radius: 50px;
+  box-shadow: 0 6px 18px rgba(255, 215, 0, 0.35);
+  transition: 0.3s ease;
+}
+
+.signup-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255,215,0,0.45);
 }
 
 .main {

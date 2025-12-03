@@ -69,6 +69,7 @@ export default function CreateTrip() {
     formData.append("category", trip.category);
     formData.append("createdBy", currentUser.userId);
 
+  
     if (fileInputRef.current && fileInputRef.current.files[0]) {
       formData.append("image", fileInputRef.current.files[0]);
     }
@@ -87,16 +88,20 @@ export default function CreateTrip() {
 
   return (
     <div className="create-page">
-      <header className="topbar">
-        <div className="topbar-inner">
-          <div className="logo">UnPlan</div>
-          <nav>
-            <a className="nav-link primary" href="/create-trip">+ Create Trip</a>
-            <a className="nav-link" href="/explore-trips">Explore Trips</a>
-            <a className="nav-link danger" onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</a>
-          </nav>
+      <nav className="navbar">
+      <div className="nav-container">
+        <div className="nav-logo">
+          <span className="logo-text">Unplan</span>
         </div>
-      </header>
+
+        <div className="nav-links">
+          <span className="nav-link">Home</span>
+          <span className="nav-link">Trips</span>
+          <span className="nav-link">Create Trip</span>
+          <span className="nav-link signup-btn">Join Trip</span>
+        </div>
+      </div>
+    </nav>
 
       <main className="main">
         <div className="main-inner">
