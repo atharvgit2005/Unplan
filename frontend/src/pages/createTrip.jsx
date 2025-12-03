@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./create-trip.css";
@@ -95,10 +96,10 @@ export default function CreateTrip() {
         </div>
 
         <div className="nav-links">
-          <span className="nav-link">Home</span>
-          <span className="nav-link">Trips</span>
+          <Link className="nav-link" to="/">Home</Link>
+          <Link className="nav-link" to="/explore-trips">Trips</Link>
           <span className="nav-link">Create Trip</span>
-          <span className="nav-link signup-btn">Join Trip</span>
+          <Link className="nav-link signup-btn" to="/explore-trips">Join Trip</Link>
         </div>
       </div>
     </nav>
