@@ -17,7 +17,7 @@ export default function Landing() {
 
           <div className="nav-links">
             <Link to="/create-trip" className="nav-link">Create Trip</Link>
-            <Link to="/join-trip" className="nav-link">Join Trip</Link>
+            <Link to="/explore-trips" className="nav-link">Join Trip</Link>
             <Link to="/login" className="nav-link">Login</Link>
             <Link to="/signup" className="nav-link signup-btn">Sign Up</Link>
           </div>
@@ -119,7 +119,7 @@ export default function Landing() {
             <h4>Explore</h4>
             <a href="#how-it-works">How It Works</a>
             <Link to="/create-trip">Create Trip</Link>
-            <Link to="/join-trip">Join Trip</Link>
+            <Link to="/explore-trips">Join Trip</Link>
           </div>
 
           <div className="footer-col">

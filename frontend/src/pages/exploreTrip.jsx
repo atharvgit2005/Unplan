@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 import { removeToken } from "../utils/auth";
@@ -34,8 +35,9 @@ function ExploreTrips() {
         <div className={styles['topbar-inner']}>
           <div className={styles.logo}>UnPlan</div>
           <nav>
-            <a className={styles['nav-link']} href="/create-trip">+ Create Trip</a>
-            <a className={`${styles['nav-link']} ${styles.primary}`} href="/explore-trips">Explore Trips</a>
+            <Link className={styles['nav-link']} to="/">Home</Link>
+            <Link className={styles['nav-link']} to="/create-trip">+ Create Trip</Link>
+            <Link className={`${styles['nav-link']} ${styles.primary}`} to="/explore-trips">Explore Trips</Link>
             <a className={`${styles['nav-link']} ${styles.danger}`} onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</a>
           </nav>
         </div>
