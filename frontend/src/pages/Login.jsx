@@ -63,7 +63,7 @@ export default function Login() {
     <div className="auth-page">
       <header className="auth-topbar">
         <div className="auth-topbar-inner">
-          <div className="logo">Unplan</div>
+          <div className="logo">UnPlan</div>
         </div>
       </header>
       <main className="auth-main">

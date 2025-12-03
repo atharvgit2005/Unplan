@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 import { removeToken } from "../utils/auth";
-import styles from "./exploreTrip.module.css";
+import "./exploreTrip.css";
 
 function ExploreTrips() {
   const [trips, setTrips] = useState([]);
@@ -29,29 +29,29 @@ function ExploreTrips() {
   };
 
   return (
-    <div className={styles['create-page']}>
-      <header className={styles.topbar}>
-        <div className={styles['topbar-inner']}>
-          <div className={styles.logo}>UnPlan</div>
+    <div className="create-page">
+      <header className="topbar">
+        <div className="topbar-inner">
+          <div className="logo">UnPlan</div>
           <nav>
-            <a className={styles['nav-link']} href="/create-trip">+ Create Trip</a>
-            <a className={`${styles['nav-link']} ${styles.primary}`} href="/explore-trips">Explore Trips</a>
-            <a className={`${styles['nav-link']} ${styles.danger}`} onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</a>
+            <a className="nav-link" href="/create-trip">+ Create Trip</a>
+            <a className="nav-link primary" href="/explore-trips">Explore Trips</a>
+            <a className="nav-link danger" onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</a>
           </nav>
         </div>
       </header>
 
-      <main className={styles.main}>
-        <div className={styles['main-inner']}>
-          <h1 className={styles.headline}>Explore Trips</h1>
+      <main className="main">
+        <div className="main-inner">
+          <h1 className="headline">Explore Trips</h1>
 
           {trips.length === 0 && <p>No trips available yet.</p>}
 
-          <div className={styles['grid-layout']} >
+          <div className="grid-layout" >
             {trips.map((trip) => (
               <div
                 key={trip._id}
-                className={styles.card}
+                className="card"
                 style={{ marginBottom: "20px", overflow: "hidden" }}
               >
                 {trip.image && (
@@ -62,7 +62,7 @@ function ExploreTrips() {
                   />
                 )}
                 <div style={{ padding: "15px" }}>
-                  <h2 className={`${styles['card-title']} ${styles.blue}`}>{trip.title}</h2>
+                  <h2 className="card-title blue">{trip.title}</h2>
                   <p><strong>Destination:</strong> {trip.destination}</p>
                   <p><strong>Budget:</strong> ₹{trip.budget}</p>
 

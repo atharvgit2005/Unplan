@@ -74,7 +74,7 @@ export default function Signup() {
 
       if (response.ok) {
         setToken(data.token);
-        alert(`Welcome to Unplan, ${data.user.name}!`);
+        alert(`Welcome to UnPlan, ${data.user.name}!`);
         window.location.href = "/create-trip";
       } else {
         setError(data.message || "Signup failed");
@@ -97,7 +97,7 @@ export default function Signup() {
       <main className="auth-main">
         <div className="auth-container" style={{ maxWidth: "550px" }}>
           <div className="auth-card">
-            <h1 className="auth-title">Join Unplan</h1>
+            <h1 className="auth-title">Join UnPlan</h1>
             <p className="auth-subtitle">Create an account to start your adventure</p>
             {error && <div className="error-box">{error}</div>}
 
