@@ -107,6 +107,7 @@ body {
 }
 
 .main-inner {
+    margin-top: 68px;
     position: relative;
     z-index: 1;
 }
